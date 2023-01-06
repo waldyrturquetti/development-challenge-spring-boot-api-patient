@@ -2,6 +2,7 @@ package com.challenge.patient.application.controller;
 
 import com.challenge.patient.application.dto.PatientDTO;
 import com.challenge.patient.domain.service.PatientRepositoryService;
+import lombok.extern.java.Log;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +22,22 @@ public class PatientController {
 
     @PostMapping
     public ResponseEntity<?> createPatient(@RequestBody @Validated PatientDTO patientDTO) {
-        return ResponseEntity.ok(patientService.create(patientDTO));
+        return ResponseEntity.ok(this.patientService.create(patientDTO));
     }
 
     @GetMapping("/by_email")
     public ResponseEntity<?> getPatientByEmail(@RequestParam @Email String email) {
-        return ResponseEntity.ok(patientService.getByEmail(email));
+        return ResponseEntity.ok(this.patientService.getByEmail(email));
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updatePatient(@RequestBody @Validated PatientDTO patientDTO) {
+        return ResponseEntity.ok(this.patientService.update(patientDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePatientById(@PathVariable Long id) {
+        this.patientService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

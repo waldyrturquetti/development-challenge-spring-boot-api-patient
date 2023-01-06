@@ -26,19 +26,24 @@ public class PatientRepositoryServiceImpl implements PatientRepositoryService {
     }
 
     @Override
-    public PatientDTO update(PatientDTO entity) {
-        return null;
+    public PatientDTO update(PatientDTO patientDTO) {
+        Patient patient = patientRepository.save(patientDTO.convertToModel());
+        patient.setAddress(addressService.update(patientDTO.getAddressDTO().convertToModel(patient)));
+        return patient.convertToDTO();
     }
 
     @Override
-    public void delete(Long id) { }
+    public void delete(Long id) {
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found the Patient."));
+        addressService.delete(patient.getAddress().getId());
+        patientRepository.delete(patient);
+    }
 
     @Override
     public PatientDTO getByEmail(String email) {
         Patient patient = patientRepository.findPatientByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found patient by email."));
-        Address address = addressService.getAddressByPatient(patient);
-        patient.setAddress(address);
         return patient.convertToDTO();
     }
 }
