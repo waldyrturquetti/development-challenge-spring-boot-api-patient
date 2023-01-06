@@ -40,6 +40,7 @@ public class AddressDTO {
 
     public Address convertToModel(Patient patient) {
         return Address.builder()
+                .id(this.id)
                 .street(this.street)
                 .number(this.number)
                 .district(this.district)

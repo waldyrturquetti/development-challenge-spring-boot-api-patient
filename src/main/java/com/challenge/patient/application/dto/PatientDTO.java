@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.annotation.Nullable;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -33,6 +34,7 @@ public class PatientDTO {
     private PatientStatus patientStatus;
 
     @NotNull
+    @Valid
     @JsonAlias("address")
     private AddressDTO addressDTO;
 

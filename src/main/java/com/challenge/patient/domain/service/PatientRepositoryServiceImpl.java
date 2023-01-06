@@ -1,10 +1,10 @@
 package com.challenge.patient.domain.service;
 
 import com.challenge.patient.application.dto.PatientDTO;
-import com.challenge.patient.domain.model.Address;
 import com.challenge.patient.domain.model.Patient;
 import com.challenge.patient.domain.repository.PatientRepository;
 import com.challenge.patient.exception.ResourceNotFoundException;
+import com.challenge.patient.exception.UnprocessableEntityException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,6 +27,11 @@ public class PatientRepositoryServiceImpl implements PatientRepositoryService {
 
     @Override
     public PatientDTO update(PatientDTO patientDTO) {
+        if (patientDTO.getId() == null) {
+            throw new UnprocessableEntityException("The given id patient must not be null!");
+        }
+        patientRepository.findById(patientDTO.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Not Found Patient."));
         Patient patient = patientRepository.save(patientDTO.convertToModel());
         patient.setAddress(addressService.update(patientDTO.getAddressDTO().convertToModel(patient)));
         return patient.convertToDTO();
