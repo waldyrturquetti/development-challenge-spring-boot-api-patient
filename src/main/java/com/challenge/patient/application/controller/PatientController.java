@@ -1,8 +1,8 @@
 package com.challenge.patient.application.controller;
 
 import com.challenge.patient.application.dto.PatientDTO;
+import com.challenge.patient.domain.model.PatientStatus;
 import com.challenge.patient.domain.service.PatientRepositoryService;
-import lombok.extern.java.Log;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -39,5 +39,10 @@ public class PatientController {
     public ResponseEntity<?> deletePatientById(@PathVariable Long id) {
         this.patientService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{id}/change_status/{status}")
+    public ResponseEntity<?> changePatientStatus(@PathVariable Long id, @PathVariable PatientStatus status) {
+        return ResponseEntity.ok(this.patientService.changePatientStatus(id, status));
     }
 }

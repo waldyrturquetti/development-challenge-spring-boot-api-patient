@@ -2,6 +2,7 @@ package com.challenge.patient.domain.service;
 
 import com.challenge.patient.application.dto.PatientDTO;
 import com.challenge.patient.domain.model.Patient;
+import com.challenge.patient.domain.model.PatientStatus;
 import com.challenge.patient.domain.repository.PatientRepository;
 import com.challenge.patient.exception.ResourceNotFoundException;
 import com.challenge.patient.exception.UnprocessableEntityException;
@@ -50,5 +51,13 @@ public class PatientRepositoryServiceImpl implements PatientRepositoryService {
         Patient patient = patientRepository.findPatientByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found patient by email."));
         return patient.convertToDTO();
+    }
+
+    @Override
+    public PatientDTO changePatientStatus(Long id, PatientStatus patientStatus) {
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Not Found patient."));
+        patient.setPatientStatus(patientStatus);
+        return patientRepository.save(patient).convertToDTO();
     }
 }
