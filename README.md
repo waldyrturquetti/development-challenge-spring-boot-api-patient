@@ -12,12 +12,10 @@
 
 - Clean and organized code (naming, etc.)
 - Knowledge of patterns (PSRs, design patterns, SOLID)
-- Be consistent and know how to argue your choices
-- Present solutions you master
 - Data Modeling
 - Code maintainability
 - Error handling
-- Architecture (structuring thought before writing)
+- Architecture
 - Affection in decoupling components (other layers, service, repository)
 
 
