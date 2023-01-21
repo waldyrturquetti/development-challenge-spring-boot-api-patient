@@ -8,7 +8,7 @@
 - You need to develop an API operation to query records (Patient's name, birth date, email and address) by patient email.
 - The API need to have validation by a password or other validation method of your choice. 
 
-## What will be evaluated:
+## What should be applied:
 
 - Clean and organized code (naming, etc.)
 - Knowledge of patterns (PSRs, design patterns, SOLID)
